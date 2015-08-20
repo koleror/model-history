@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load jsonify %}
 {% block content %}
   <div class="container">
     <div class="row">
@@ -14,8 +14,13 @@
 
     <h1>Update history</h1>
     {% for h in history %}
-    <div class="one-line">
+    <div class="one-line" style="margin-bottom: 10px; border-bottom: 1px solid black; padding-bottom:10px;">
       <span>{{ h.id}}</span> - <span>{{h.status}}</span> - <span> {{h.created_on}}</span>
+      <br>
+      {% autoescape off %}
+      {{h.fields | jsonify }}
+      {% endautoescape %}
+      <br>
       <button>Activate</button><button>Cancel</button>
     </div>
     {% endfor %}
