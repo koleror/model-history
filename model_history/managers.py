@@ -6,7 +6,7 @@ class HistoryEntryManager(models.Manager):
         def generate_diff(instance):
             # checks the db copy to compare updates
             original = instance._meta.model.objects.get(id=instance.id)
-            data = {'model': instance.__module__ + instance.__class__.__name__, 'id': original.id, 'fields': {}}
+            data = {'model': instance.__module__ + '.' + instance.__class__.__name__, 'id': original.id, 'fields': {}}
             for field in instance._meta.fields:
                 attr = getattr(instance, field.name)
                 if isinstance(attr, models.Model):
@@ -22,5 +22,6 @@ class HistoryEntryManager(models.Manager):
         else:
             status = self.model.DRAFT
         if fields['fields'] != {}:
-            return self.model.objects.create(fields=fields, user=user, status=status)
+            model = self.model(fields=fields, user=user, status=status)
+            instance.history_entries.add(model)
         return None

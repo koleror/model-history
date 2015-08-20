@@ -16,4 +16,4 @@ def one_sample(request, id):
             form.save(user=request.user)
     else:
         form = SampleForm(instance=s)
-    return render(request, 'one_sample.html', {'form': form})
+    return render(request, 'one_sample.html', {'form': form, 'history': None})
