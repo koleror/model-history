@@ -11,9 +11,9 @@ def list_samples(request):
 def one_sample(request, id):
     s = get_object_or_404(Sample, id=id)
     if request.method == "POST":
-        form = SettingsForm(request.POST, instance=request.user)
+        form = SampleForm(request.POST, instance=s)
         if form.is_valid():
-            form.save()
+            form.save(user=request.user)
     else:
         form = SampleForm(instance=s)
     return render(request, 'one_sample.html', {'form': form})
