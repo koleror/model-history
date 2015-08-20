@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+  <div class="container">
+    <ul>
+      {% for s in samples %}
+        <li>
+            <a href="{{s.get_absolute_url}}">{{s.id}}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endblock %}
